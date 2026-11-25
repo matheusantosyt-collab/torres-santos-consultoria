@@ -1,34 +1,430 @@
 <!doctype html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Torres Santos Consultoria — Licitações públicas e consultoria para empresas</title>
-    <meta
-      name="description"
-      content="Torres Santos Consultoria: consultoria em licitações públicas (Lei 14.133/2021) e consultoria para empresas. Do edital ao contrato assinado."
-    />
-    <meta name="theme-color" content="#0a0a0a" />
-    <meta property="og:title" content="Torres Santos Consultoria" />
-    <meta
-      property="og:description"
-      content="Consultoria em licitações públicas e para empresas, por Matheus Santos Torres."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="pt_BR" />
-    <link
-      rel="icon"
-      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230a0a0a'/%3E%3Crect x='17' y='12' width='11' height='40' fill='%23efefef'/%3E%3Crect x='36' y='12' width='11' height='40' fill='%23b11226'/%3E%3C/svg%3E"
-    />
-    <link rel="preconnect" href="https://api.fontshare.com" />
-    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
-    <link
-      href="https://api.fontshare.com/v2/css?f[]=erode@400,500,600&f[]=satoshi@400,500,700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<html lang="pt-BR" data-theme="papel">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Torres Santos Consultoria | Licitações e consultoria administrativa</title>
+<meta name="description" content="Consultoria em licitações públicas (Lei nº 14.133/2021) e consultoria administrativa para pequenas e médias empresas. Do edital ao contrato, com atendimento direto do fundador.">
+<meta name="theme-color" content="#F2EEE6">
+<link rel="canonical" href="https://matheusantosyt-collab.github.io/torres-santos-consultoria/">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Torres Santos Consultoria">
+<meta property="og:title" content="Torres Santos Consultoria — Licitações públicas, sem improviso">
+<meta property="og:description" content="Consultoria em licitações públicas (Lei nº 14.133/2021) e consultoria administrativa para pequenas e médias empresas. Do edital ao contrato, com atendimento direto do fundador.">
+<meta property="og:url" content="https://matheusantosyt-collab.github.io/torres-santos-consultoria/">
+<meta property="og:image" content="https://matheusantosyt-collab.github.io/torres-santos-consultoria/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Torres Santos Consultoria — Licitações públicas, sem improviso">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"Torres Santos Consultoria","url":"https://matheusantosyt-collab.github.io/torres-santos-consultoria/","image":"https://matheusantosyt-collab.github.io/torres-santos-consultoria/og.png","email":"matheustorresantos@outlook.com","telephone":"+55-81-99639-2560","areaServed":"BR","founder":{"@type":"Person","name":"Matheus Santos Torres"},"serviceType":["Consultoria em licitações públicas","Consultoria administrativa para empresas"],"knowsAbout":["Lei nº 14.133/2021","Licitações públicas","Gestão empresarial"]}</script>
+<script>
+(function () {
+  var d = document.documentElement;
+  d.classList.add('js');
+  var calm = false;
+  try { calm = localStorage.getItem('tsc-calm') === '1'; } catch (e) {}
+  if (new URLSearchParams(location.search).get('movimento') === 'nao') calm = true;
+  d.classList.add(calm ? 'reduce' : 'motion');
+  d.setAttribute('data-theme', 'papel');
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=Inter+Tight:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600&display=swap">
+<link rel="stylesheet" href="./src/site.css">
+<script type="module" src="./src/site.js"></script>
+</head>
+<body>
+
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="logo" href="#topo" aria-label="Torres Santos Consultoria — início">
+      <span class="logo-pillars" aria-hidden="true"><i></i><i></i></span>
+      <span class="logo-type">
+        <span class="logo-name">Torres Santos</span>
+        <span class="logo-sub">Consultoria</span>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Principal">
+      <a href="#servicos"><span class="n">01</span>Serviços</a>
+      <a href="#metodo"><span class="n">02</span>Método</a>
+      <a href="#fundador"><span class="n">03</span>Fundador</a>
+      <a href="#perguntas"><span class="n">04</span>Perguntas</a>
+    </nav>
+    <a class="btn btn-sm nav-cta" href="https://wa.me/5581996392560" target="_blank" rel="noopener">Conversar no WhatsApp <span aria-hidden="true">→</span></a>
+    <button class="nav-menu" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<div class="menu chapter-ink" id="menu" hidden>
+  <div class="wrap menu-in">
+    <div class="menu-top">
+      <span class="mono">§ Índice</span>
+      <button class="nav-menu" id="menuClose" type="button">Fechar</button>
+    </div>
+    <nav class="menu-links" aria-label="Menu">
+      <a href="#servicos"><span class="n">01</span>Serviços</a>
+      <a href="#metodo"><span class="n">02</span>Método</a>
+      <a href="#fundador"><span class="n">03</span>Fundador</a>
+      <a href="#perguntas"><span class="n">04</span>Perguntas</a>
+      <a href="#contato"><span class="n">05</span>Contato</a>
+    </nav>
+    <a class="btn menu-cta" href="https://wa.me/5581996392560" target="_blank" rel="noopener">Conversar no WhatsApp <span aria-hidden="true">→</span></a>
+  </div>
+</div>
+
+<main id="conteudo">
+
+<!-- ============ HERO ============ -->
+<section class="chapter hero tone-a" id="topo" aria-labelledby="hero-title">
+  <div class="wrap">
+    <div class="grid hero-meta mono">
+      <span>Licitações · Consultoria administrativa</span>
+      <span>Lei nº&nbsp;14.133/2021</span>
+      <span>Atendimento em todo o Brasil</span>
+    </div>
+
+    <div class="grid hero-stage">
+      <h1 class="hero-title" id="hero-title" data-split data-intro>
+        <span class="l1">Licitações públicas,</span>
+        <em class="l2">sem improviso.</em>
+      </h1>
+      <figure class="hero-photo" aria-hidden="true">
+        <div class="hero-photo-in">
+          <img src="./img/contrato.jpg" alt="" width="1920" height="1440" fetchpriority="high">
+        </div>
+      </figure>
+    </div>
+
+    <div class="grid hero-foot">
+      <p class="hero-sub lead" data-rise>Duas consultorias para pequenas e médias empresas: licitações públicas, do edital ao contrato, e consultoria administrativa, da rotina interna ao planejamento do crescimento. Atendimento direto do fundador.</p>
+      <div class="hero-ctas" data-rise>
+        <a class="btn" href="https://wa.me/5581996392560?text=Ol%C3%A1%2C%20Matheus.%20Vim%20pelo%20site%20e%20gostaria%20de%20conversar%20sobre%20a%20consultoria." target="_blank" rel="noopener">Conversar pelo WhatsApp <span aria-hidden="true">→</span></a>
+        <a class="tlink" href="#metodo">Conhecer o método</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ § 01 STATEMENT ============ -->
+<section class="chapter chapter-ink statement" aria-label="Onde as licitações se perdem">
+  <div class="wrap">
+    <div class="idx grid"><span class="idx-n"><b>§</b> 01</span><span class="idx-t">Antes do lance</span><span class="idx-x">Preparação</span></div>
+    <p class="statement-text" id="statementText">Muitas licitações não se perdem no lance. Perdem-se antes: numa <span class="hl">certidão vencida</span>, numa <span class="hl">exigência</span> que passou despercebida, num <span class="hl">prazo</span> contado errado. É nessa preparação que a consultoria trabalha.</p>
+  </div>
+  <div class="marquee" id="marquee" aria-label="Modalidades: pregão, concorrência, concurso, leilão e diálogo competitivo">
+    <div class="marquee-track" aria-hidden="true">
+      <span class="marquee-item">Pregão <b>§</b> Concorrência <b>§</b> Concurso <b>§</b> Leilão <b>§</b> Diálogo competitivo <b>§</b>&nbsp;</span>
+      <span class="marquee-item">Pregão <b>§</b> Concorrência <b>§</b> Concurso <b>§</b> Leilão <b>§</b> Diálogo competitivo <b>§</b>&nbsp;</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ § 02 PARA QUEM ============ -->
+<section class="chapter tone-b para-quem" aria-labelledby="pq-title">
+  <div class="wrap">
+    <div class="idx grid"><span class="idx-n"><b>§</b> 02</span><span class="idx-t">Para quem é</span><span class="idx-x">Pequenas e médias empresas</span></div>
+    <div class="grid sec-head">
+      <h2 class="h2" id="pq-title" data-split>Para quem é</h2>
+    </div>
+    <ol class="cols4" role="list">
+      <li data-rise><span class="mono n">01</span><h3 class="h3s">Quer vender ao governo</h3><p>E precisa saber se a empresa está pronta e por onde começar.</p></li>
+      <li data-rise><span class="mono n">02</span><h3 class="h3s">Disputa, mas é inabilitada</h3><p>Perde por documento, atestado ou detalhe do edital, não por preço.</p></li>
+      <li data-rise><span class="mono n">03</span><h3 class="h3s">Cresceu, e a rotina não acompanhou</h3><p>Processos, documentos e decisões ainda dependem de improviso.</p></li>
+      <li data-rise><span class="mono n">04</span><h3 class="h3s">Quer organizar antes de crescer</h3><p>Busca estrutura, indicadores e planejamento para o próximo passo.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ § 03 SERVIÇOS ============ -->
+<section class="chapter tone-a servicos" id="servicos" aria-labelledby="sv-title">
+  <div class="wrap">
+    <div class="idx grid"><span class="idx-n"><b>§</b> 03</span><span class="idx-t">Serviços</span><span class="idx-x">Duas consultorias</span></div>
+    <div class="grid sec-head">
+      <h2 class="h2 sv-h" id="sv-title" data-split>O que fazemos</h2>
+      <p class="lead sv-lead" data-rise>Duas consultorias, um mesmo rigor: ler com atenção, organizar com método e decidir com antecedência.</p>
+    </div>
+
+    <div class="ilist">
+      <h3 class="ilist-h" data-rise>I. Consultoria em licitações</h3>
+      <ul role="list">
+        <li><a class="irow grid" href="#contato" data-rise><span class="mono irow-n">1.1</span><span class="irow-t">Triagem e leitura de editais</span><span class="irow-d">Edital, termo de referência e anexos lidos por completo, antes de decidir.</span><span class="irow-a" aria-hidden="true">→</span></a></li>
+        <li><a class="irow grid" href="#contato" data-rise><span class="mono irow-n">1.2</span><span class="irow-t">Habilitação</span><span class="irow-d">Certidões, atestados e qualificação conferidos item a item.</span><span class="irow-a" aria-hidden="true">→</span></a></li>
+        <li><a class="irow grid" href="#contato" data-rise><span class="mono irow-n">1.3</span><span class="irow-t">Proposta e preço</span><span class="irow-d">Custos compostos e planilha revisada contra o edital.</span><span class="irow-a" aria-hidden="true">→</span></a></li>
+        <li><a class="irow grid" href="#contato" data-rise><span class="mono irow-n">1.4</span><span class="irow-t">Esclarecimentos, impugnações e recursos</span><span class="irow-d">Apoio técnico aos documentos apresentados pela própria empresa.</span><span class="irow-a" aria-hidden="true">→</span></a></li>
+        <li><a class="irow grid" href="#contato" data-rise><span class="mono irow-n">1.5</span><span class="irow-t">Gestão do contrato</span><span class="irow-d">Prazos, entregas, medições e, quando cabe, reequilíbrio.</span><span class="irow-a" aria-hidden="true">→</span></a></li>
+      </ul>
+
+      <h3 class="ilist-h" data-rise>II. Consultoria administrativa para empresas</h3>
+      <ul role="list">
+        <li><a class="irow grid" href="#contato" data-rise><span class="mono irow-n">2.1</span><span class="irow-t">Diagnóstico administrativo</span><span class="irow-d">Um retrato claro da operação: o que funciona, o que trava e o que falta.</span><span class="irow-a" aria-hidden="true">→</span></a></li>
+        <li><a class="irow grid" href="#contato" data-rise><span class="mono irow-n">2.2</span><span class="irow-t">Processos e rotinas</span><span class="irow-d">Fluxos internos desenhados e documentados para crescer sem improviso.</span><span class="irow-a" aria-hidden="true">→</span></a></li>
+        <li><a class="irow grid" href="#contato" data-rise><span class="mono irow-n">2.3</span><span class="irow-t">Planejamento e indicadores</span><span class="irow-d">Metas e indicadores para decidir com base em números.</span><span class="irow-a" aria-hidden="true">→</span></a></li>
+        <li><a class="irow grid" href="#contato" data-rise><span class="mono irow-n">2.4</span><span class="irow-t">Estrutura e responsabilidades</span><span class="irow-d">Funções e rotinas de cada área definidas com clareza.</span><span class="irow-a" aria-hidden="true">→</span></a></li>
+        <li><a class="irow grid" href="#contato" data-rise><span class="mono irow-n">2.5</span><span class="irow-t">Documentos e vencimentos</span><span class="irow-d">Certidões, licenças e prazos administrativos sempre em dia.</span><span class="irow-a" aria-hidden="true">→</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ § 04 MÉTODO ============ -->
+<section class="chapter chapter-ink metodo" id="metodo" aria-labelledby="mt-title">
+  <!-- Pinned, scroll-scrubbed layer (desktop, motion allowed) -->
+  <div class="metodo-pin" aria-hidden="true">
+    <div class="wrap metodo-pin-in">
+      <div class="idx grid"><span class="idx-n"><b>§</b> 04</span><span class="idx-t">Método</span><span class="idx-x">Cinco etapas</span></div>
+      <div class="grid metodo-body">
+        <div class="metodo-left">
+          <p class="h2 metodo-h">Como trabalhamos</p>
+          <div class="stepper" id="stepper">
+            <button type="button" tabindex="-1" data-step="0" class="is-active"><span class="sn">01</span><span class="mono">Empresa</span></button>
+            <button type="button" tabindex="-1" data-step="1"><span class="sn">02</span><span class="mono">Edital</span></button>
+            <button type="button" tabindex="-1" data-step="2"><span class="sn">03</span><span class="mono">Preço</span></button>
+            <button type="button" tabindex="-1" data-step="3"><span class="sn">04</span><span class="mono">Documentos</span></button>
+            <button type="button" tabindex="-1" data-step="4"><span class="sn">05</span><span class="mono">Contrato</span></button>
+          </div>
+          <div class="panels" id="panels">
+            <div class="panel is-active" data-panel="0">
+              <div class="m"><p class="panel-c">Primeiro, a empresa.</p></div>
+              <div class="m"><p class="panel-t">Antes de qualquer edital: o que a empresa vende, que documentos já tem e em quais compras públicas faz sentido disputar.</p></div>
+              <div class="m"><p class="panel-e mono"><i></i>Entregável: <span>Diagnóstico de prontidão e lista de pendências.</span></p></div>
+            </div>
+            <div class="panel" data-panel="1">
+              <div class="m"><p class="panel-c">Depois, o edital inteiro.</p></div>
+              <div class="m"><p class="panel-t">Edital, termo de referência e anexos lidos por completo. Prazos e exigências mapeados antes de decidir.</p></div>
+              <div class="m"><p class="panel-e mono"><i></i>Entregável: <span>Relatório de viabilidade: participar ou não, e por quê.</span></p></div>
+            </div>
+            <div class="panel" data-panel="2">
+              <div class="m"><p class="panel-c">Então, o preço.</p></div>
+              <div class="m"><p class="panel-t">Custos compostos, planilha conferida contra o edital e limite de preço definido com a empresa antes da fase de lances.</p></div>
+              <div class="m"><p class="panel-e mono"><i></i>Entregável: <span>Proposta e planilha revisadas.</span></p></div>
+            </div>
+            <div class="panel" data-panel="3">
+              <div class="m"><p class="panel-c">Em seguida, os documentos.</p></div>
+              <div class="m"><p class="panel-t">Documentos reunidos e conferidos um a um contra o edital, para que nenhuma pendência custe a disputa.</p></div>
+              <div class="m"><p class="panel-e mono"><i></i>Entregável: <span>Checklist de habilitação conferido.</span></p></div>
+            </div>
+            <div class="panel" data-panel="4">
+              <div class="m"><p class="panel-c">Por fim, o contrato.</p></div>
+              <div class="m"><p class="panel-t">Assinado o contrato, começa a execução: entregas, medições, pagamentos e, quando cabem, reequilíbrio e prorrogações.</p></div>
+              <div class="m"><p class="panel-e mono"><i></i>Entregável: <span>Calendário de entregas, pagamentos e vigência.</span></p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="metodo-right">
+          <div class="sheet" id="sheet"><div class="sheet-in">
+            <div class="sheet-head">
+              <span>EDITAL · EXEMPLO ILUSTRATIVO</span>
+              <span>Pregão eletrônico nº&nbsp;00/2026</span>
+              <span>Contratação de serviços de manutenção predial</span>
+            </div>
+            <p class="sheet-title">Edital de Pregão Eletrônico</p>
+            <p class="sheet-sub">Menor preço · Execução indireta</p>
+
+            <div class="clause" data-clause="0">
+              <p class="clause-h">1. Das condições de participação</p>
+              <span class="bar" style="--w:96%"></span>
+              <span class="bar key" style="--w:88%"><i class="hlt"></i></span>
+              <span class="bar" style="--w:62%"></span>
+              <span class="note">§ 01 · Empresa</span>
+            </div>
+            <div class="clause" data-clause="1">
+              <p class="clause-h">2. Do objeto e dos prazos</p>
+              <span class="bar" style="--w:92%"></span>
+              <span class="bar" style="--w:97%"></span>
+              <span class="bar key" style="--w:74%"><i class="hlt"></i></span>
+              <span class="note">§ 02 · Edital</span>
+            </div>
+            <div class="clause" data-clause="2">
+              <p class="clause-h">3. Da proposta de preços</p>
+              <span class="bar key" style="--w:90%"><i class="hlt"></i></span>
+              <span class="bar" style="--w:95%"></span>
+              <span class="bar" style="--w:48%"></span>
+              <span class="note">§ 03 · Preço</span>
+            </div>
+            <div class="clause" data-clause="3">
+              <p class="clause-h">4. Da habilitação</p>
+              <span class="bar" style="--w:94%"></span>
+              <span class="bar key" style="--w:84%"><i class="hlt"></i></span>
+              <span class="bar" style="--w:90%"></span>
+              <span class="bar" style="--w:36%"></span>
+              <span class="note">§ 04 · Documentos</span>
+            </div>
+            <div class="clause" data-clause="4">
+              <p class="clause-h">5. Do contrato e da execução</p>
+              <span class="bar" style="--w:97%"></span>
+              <span class="bar key" style="--w:80%"><i class="hlt"></i></span>
+              <span class="note">§ 05 · Contrato</span>
+            </div>
+
+            <div class="sign">
+              <svg class="sign-svg" viewBox="0 0 260 70" fill="none" aria-hidden="true">
+                <path pathLength="1" d="M8 48 C 18 20, 34 8, 38 22 C 42 36, 22 58, 30 56 C 40 54, 50 30, 58 32 C 66 34, 56 52, 64 50 C 72 48, 76 34, 84 36 C 92 38, 86 52, 94 50 C 104 47, 108 20, 116 22 C 124 24, 112 56, 122 54 C 132 52, 138 36, 146 38 C 154 40, 148 52, 158 50 C 170 47, 176 30, 186 34 C 196 38, 188 52, 200 48 C 214 43, 228 36, 252 30"/>
+              </svg>
+              <span class="sign-line"></span>
+              <span class="sign-l">Representante legal · Declaração de ciência do edital</span>
+              <span class="stamp">Assinado</span>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accessible list; also the visible layout on mobile / reduced motion -->
+  <div class="wrap metodo-stack">
+    <div class="idx grid metodo-stack-idx"><span class="idx-n"><b>§</b> 04</span><span class="idx-t">Método</span><span class="idx-x">Cinco etapas</span></div>
+    <h2 class="h2 metodo-stack-h" id="mt-title">Como trabalhamos</h2>
+    <div class="sheet-mini" id="sheetMini" aria-hidden="true"></div>
+    <ol class="stack" role="list">
+      <li class="card" style="--k:0"><span class="sn" aria-hidden="true">01</span><p class="panel-c">Primeiro, a empresa.</p><p class="panel-t">Antes de qualquer edital: o que a empresa vende, que documentos já tem e em quais compras públicas faz sentido disputar.</p><p class="panel-e mono"><i></i>Entregável: <span>Diagnóstico de prontidão e lista de pendências.</span></p></li>
+      <li class="card" style="--k:1"><span class="sn" aria-hidden="true">02</span><p class="panel-c">Depois, o edital inteiro.</p><p class="panel-t">Edital, termo de referência e anexos lidos por completo. Prazos e exigências mapeados antes de decidir.</p><p class="panel-e mono"><i></i>Entregável: <span>Relatório de viabilidade: participar ou não, e por quê.</span></p></li>
+      <li class="card" style="--k:2"><span class="sn" aria-hidden="true">03</span><p class="panel-c">Então, o preço.</p><p class="panel-t">Custos compostos, planilha conferida contra o edital e limite de preço definido com a empresa antes da fase de lances.</p><p class="panel-e mono"><i></i>Entregável: <span>Proposta e planilha revisadas.</span></p></li>
+      <li class="card" style="--k:3"><span class="sn" aria-hidden="true">04</span><p class="panel-c">Em seguida, os documentos.</p><p class="panel-t">Documentos reunidos e conferidos um a um contra o edital, para que nenhuma pendência custe a disputa.</p><p class="panel-e mono"><i></i>Entregável: <span>Checklist de habilitação conferido.</span></p></li>
+      <li class="card" style="--k:4"><span class="sn" aria-hidden="true">05</span><p class="panel-c">Por fim, o contrato.</p><p class="panel-t">Assinado o contrato, começa a execução: entregas, medições, pagamentos e, quando cabem, reequilíbrio e prorrogações.</p><p class="panel-e mono"><i></i>Entregável: <span>Calendário de entregas, pagamentos e vigência.</span></p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ============ § 05 REGRAS ============ -->
+<section class="chapter tone-b regras" aria-labelledby="rg-title">
+  <div class="wrap">
+    <div class="idx grid"><span class="idx-n"><b>§</b> 05</span><span class="idx-t">Regras que pesam na disputa</span><span class="idx-x">Lei nº&nbsp;14.133/2021</span></div>
+    <div class="grid sec-head">
+      <p class="kicker mono" data-rise>Lei nº&nbsp;14.133/2021</p>
+      <h2 class="h2 rg-h" id="rg-title" data-split>Regras que pesam na disputa</h2>
+    </div>
+    <ul class="cols4 rules" role="list">
+      <li data-rise>
+        <p class="stat"><span class="stat-n">3</span><span class="stat-u mono">Dias úteis</span></p>
+        <p class="mono ref">Art.&nbsp;164</p>
+        <p>Prazo para impugnar o edital, contado antes da data de abertura.</p>
+      </li>
+      <li data-rise>
+        <p class="stat"><span class="stat-w"><em>Na hora</em></span></p>
+        <p class="mono ref">Art.&nbsp;165</p>
+        <p>A intenção de recorrer é manifestada na própria sessão. Depois, 3&nbsp;dias úteis para as razões.</p>
+      </li>
+      <li data-rise>
+        <p class="stat"><span class="stat-n">5</span><span class="stat-u mono">Modalidades</span></p>
+        <p class="mono ref">Art.&nbsp;28</p>
+        <p>Pregão, concorrência, concurso, leilão e diálogo competitivo.</p>
+      </li>
+      <li data-rise>
+        <p class="stat"><span class="stat-w">ME/EPP</span></p>
+        <p class="mono ref">LC&nbsp;123/2006</p>
+        <p>Tratamento diferenciado, como preferência no desempate e prazo extra para regularizar a documentação fiscal.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ § 06 FUNDADOR ============ -->
+<section class="chapter tone-a fundador" id="fundador" aria-labelledby="fd-title">
+  <div class="wrap">
+    <div class="idx grid"><span class="idx-n"><b>§</b> 06</span><span class="idx-t">Fundador</span><span class="idx-x">Atendimento direto</span></div>
+    <div class="grid fd-grid">
+      <figure class="portrait" id="portrait" data-reveal>
+        <div class="portrait-frame">
+          <img src="./img/foto.jpg" alt="Matheus Santos Torres, fundador da Torres Santos Consultoria" width="1200" height="1500" loading="lazy" onerror="this.closest('figure').classList.add('is-fallback');this.remove();">
+        </div>
+        <div class="portrait-fallback" aria-hidden="true">
+          <span class="pf-mark">“</span>
+          <p class="pf-quote">Da primeira leitura do edital ao acompanhamento do contrato.</p>
+          <p class="pf-name">Matheus Santos Torres</p>
+        </div>
+        <figcaption class="mono portrait-cap">Matheus Santos Torres — Fundador</figcaption>
+      </figure>
+      <div class="fd-text">
+        <h2 class="h2" id="fd-title" data-split>Matheus Santos Torres</h2>
+        <p class="lead" data-rise>Fundou a Torres Santos Consultoria para que pequenas e médias empresas cheguem às licitações tão preparadas quanto as grandes.</p>
+        <p data-rise>Cada empresa é atendida diretamente por ele, da primeira leitura do edital ao acompanhamento do contrato. O trabalho une o conhecimento da Lei nº&nbsp;14.133/2021 à gestão: documentação em ordem, propostas consistentes e uma orientação franca sobre quando disputar e quando não vale a pena.</p>
+        <p class="fd-note" data-rise><span class="mono">Nota</span>Duas frentes de consultoria — licitações públicas e administração de empresas — com o mesmo atendimento direto, do primeiro contato ao acompanhamento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ § 07 PERGUNTAS ============ -->
+<section class="chapter tone-b perguntas" id="perguntas" aria-labelledby="fq-title">
+  <div class="wrap">
+    <div class="idx grid"><span class="idx-n"><b>§</b> 07</span><span class="idx-t">Perguntas</span><span class="idx-x">Seis respostas</span></div>
+    <div class="grid fq-grid">
+      <div class="fq-head">
+        <h2 class="h2" id="fq-title" data-split>Perguntas frequentes</h2>
+        <p class="lead" data-rise>O que as empresas costumam perguntar antes da primeira conversa.</p>
+      </div>
+      <div class="acc">
+        <details data-rise><summary><span class="mono n">01</span><span class="q">A consultoria participa da licitação no lugar da minha empresa?</span><span class="plus" aria-hidden="true"></span></summary><div class="a"><p>Não. A consultoria analisa o edital, organiza a documentação, revisa a proposta e orienta as decisões. O cadastro, os lances e as assinaturas são sempre da sua empresa.</p></div></details>
+        <details data-rise><summary><span class="mono n">02</span><span class="q">Vocês garantem que vou vencer?</span><span class="plus" aria-hidden="true"></span></summary><div class="a"><p>Não, e ninguém pode garantir. O resultado depende do preço, da concorrência e da decisão da administração. O que a consultoria garante é preparação: que a empresa não perca por um documento, um prazo ou uma exigência mal lida.</p></div></details>
+        <details data-rise><summary><span class="mono n">03</span><span class="q">Minha empresa nunca participou de licitação. Faz sentido começar agora?</span><span class="plus" aria-hidden="true"></span></summary><div class="a"><p>Sim. O primeiro passo é um diagnóstico: o que a empresa vende, quais documentos já tem e quais editais combinam com o porte dela.</p></div></details>
+        <details data-rise><summary><span class="mono n">04</span><span class="q">Sou ME ou EPP. Tenho alguma vantagem?</span><span class="plus" aria-hidden="true"></span></summary><div class="a"><p>Sim. A Lei Complementar nº&nbsp;123/2006 prevê tratamento diferenciado, como preferência no desempate e prazo adicional para regularizar a documentação fiscal. Condições e limites são avaliados edital a edital.</p></div></details>
+        <details data-rise><summary><span class="mono n">05</span><span class="q">O que faz a consultoria administrativa?</span><span class="plus" aria-hidden="true"></span></summary><div class="a"><p>Organiza a operação da empresa: diagnóstico, processos e rotinas, planejamento com indicadores, estrutura de funções e controle de documentos e vencimentos. Serve tanto para quem vende ao governo quanto para quem não vende.</p></div></details>
+        <details data-rise><summary><span class="mono n">06</span><span class="q">O que é a Lei nº&nbsp;14.133/2021?</span><span class="plus" aria-hidden="true"></span></summary><div class="a"><p>É a Lei de Licitações e Contratos Administrativos. Substituiu a Lei nº&nbsp;8.666/1993, a Lei do Pregão e as regras de licitação do RDC, e hoje rege as novas licitações da administração pública.</p></div></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ § 08 CONTATO ============ -->
+<section class="chapter chapter-ink contato" id="contato" aria-labelledby="ct-title">
+  <div class="wrap">
+    <div class="idx grid"><span class="idx-n"><b>§</b> 08</span><span class="idx-t">Contato</span><span class="idx-x">WhatsApp · E-mail</span></div>
+    <div class="grid ct-grid">
+      <div class="ct-left">
+        <h2 class="ct-h" id="ct-title" data-split>Tem um edital em vista?</h2>
+        <p class="lead" data-rise>Envie o número do edital ou conte o que a sua empresa vende. A primeira conversa serve para entender o caso e dizer, com franqueza, se faz sentido seguir.</p>
+      </div>
+      <form class="form" id="form" novalidate>
+        <label class="field" data-rise><span class="mono">Seu nome</span><input name="nome" type="text" autocomplete="name" placeholder="Maria Souza"></label>
+        <label class="field" data-rise><span class="mono">Empresa</span><input name="empresa" type="text" autocomplete="organization" placeholder="Alfa Engenharia"></label>
+        <label class="field" data-rise><span class="mono">Edital ou órgão (opcional)</span><input name="edital" type="text" placeholder="Pregão 12/2026 — Prefeitura do Recife"></label>
+        <fieldset class="opts" data-rise>
+          <legend class="mono">Assunto</legend>
+          <label class="opt"><input type="radio" name="assunto" value="licitações públicas" checked><span>Licitações públicas</span></label>
+          <label class="opt"><input type="radio" name="assunto" value="consultoria administrativa"><span>Consultoria administrativa</span></label>
+        </fieldset>
+        <button class="btn btn-block" type="submit" data-rise>Continuar no WhatsApp <span aria-hidden="true">→</span></button>
+        <p class="mono hint" data-rise>O WhatsApp abre com a mensagem pronta. Nada é armazenado neste site.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="chapter chapter-ink footer" id="footer">
+  <div class="wrap">
+    <div class="grid ft-cols">
+      <div><p class="mono ft-h">Contato</p><a href="https://wa.me/5581996392560" target="_blank" rel="noopener">WhatsApp (81)&nbsp;99639-2560</a><a href="mailto:matheustorresantos@outlook.com">matheustorresantos@outlook.com</a></div>
+      <div><p class="mono ft-h">Navegação</p><a href="#servicos">Serviços</a><a href="#metodo">Método</a><a href="#fundador">Fundador</a><a href="#perguntas">Perguntas</a><a href="#contato">Contato</a></div>
+      <div><p class="mono ft-h">Atendimento</p><p>Remoto, para todo o Brasil</p></div>
+      <div><p class="mono ft-h">Torres Santos Consultoria</p><p>Fundador: Matheus Santos Torres</p></div>
+    </div>
+    <div class="ft-mark-wrap" aria-hidden="true"><span class="ft-mark" id="ftMark">Torres Santos</span></div>
+    <div class="ft-legal">
+      <p class="mono">© 2026 Torres Santos Consultoria. Consultoria em licitações e consultoria administrativa.</p>
+      <button class="calm-toggle mono" id="calmToggle" type="button">Reduzir animações</button>
+      <details class="credits">
+        <summary class="mono">Créditos das imagens</summary>
+        <p>“Legal Contract &amp; Signature - Warm Tones” por Blogtrepreneur, <a href="https://creativecommons.org/licenses/by/2.0" target="_blank" rel="noopener">CC BY 2.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:Legal_Contract_%26_Signature_-_Warm_Tones.jpg" target="_blank" rel="noopener">Wikimedia Commons</a>.</p>
+      </details>
+    </div>
+  </div>
+</footer>
+
+
+</body>
 </html>

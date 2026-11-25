@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
 
+// Site estático (HTML + CSS + JS puros).
 // base './' => funciona em qualquer repositório do GitHub Pages (usuario.github.io/repo/)
 export default defineConfig({
   base: './',
-  plugins: [react()],
 })
