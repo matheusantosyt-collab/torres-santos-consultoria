@@ -664,3 +664,75 @@ html.reduce .portrait.is-fallback[data-reveal] .portrait-fallback > * { opacity:
   transition: color .3s, border-color .3s;
 }
 .calm-toggle:hover { color: var(--text); border-color: var(--text-2); }
+
+/* ═══════════════ Camada de movimento (src/motion.js) ═══════════════ */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* Abertura: cobre o topo enquanto a cortina monta (sem piscar) */
+html.curtain::after { content: ""; position: fixed; inset: 0; z-index: 200; background: #F2EEE6; }
+.curtain {
+  position: fixed; inset: 0; z-index: 200; display: grid; place-items: center;
+  background: #F2EEE6; color: #15120F; clip-path: inset(0 0 0 0);
+  transition: clip-path 1.05s var(--ease-io);
+}
+.curtain.is-out { clip-path: inset(0 0 100% 0); }
+.curtain-in { display: flex; align-items: center; gap: 18px; padding: 24px; }
+.cp { display: flex; gap: 7px; }
+.cp i { display: block; width: 7px; height: 58px; background: #15120F; transform: scaleY(0); transform-origin: 50% 100%; transition: transform .8s var(--ease-out); }
+.cp i + i { background: #8C1C2B; transition-delay: .12s; }
+.curtain.is-on .cp i { transform: none; }
+.cn { display: flex; font-family: var(--f-serif); font-size: clamp(36px, 5vw, 60px); line-height: 1; letter-spacing: -.02em; font-variation-settings: "opsz" 72; }
+.cm { display: inline-block; overflow: hidden; padding: .1em 0 .14em; margin: -.1em 0 -.14em; }
+.cc { display: inline-block; transform: translateY(115%); transition: transform .9s var(--ease-out); transition-delay: calc(.22s + var(--c) * 34ms); }
+.curtain.is-on .cc { transform: none; }
+.cs { align-self: flex-end; margin-bottom: .5em; font-family: var(--f-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: #5C554C; opacity: 0; transition: opacity .6s .85s; }
+.curtain.is-on .cs { opacity: 1; }
+@media (max-width: 600px) { .curtain-in { flex-wrap: wrap; justify-content: center; gap: 14px; } .cs { flex-basis: 100%; text-align: center; margin: 0; } }
+
+/* Título do topo letra por letra */
+html.letters #hero-title .w > span { transform: none !important; transition: none !important; }
+#hero-title .ch {
+  display: inline-block; transform: translateY(115%) rotate(7deg); transform-origin: 0 100%;
+  transition: transform 1s var(--ease-out); transition-delay: calc(var(--c) * 26ms);
+}
+#hero-title.is-in .ch { transform: none; }
+
+/* Foto do topo: abre como uma cortina e se aproxima */
+html.motion .hero-photo-in { clip-path: inset(100% 0 0 0); transition: clip-path 1.5s var(--ease-io) .3s; }
+html.motion #topo:has(#hero-title.is-in) .hero-photo-in { clip-path: inset(0 0 0 0); }
+html.motion .hero-photo img { animation-duration: 2.4s; animation-play-state: paused; }
+html.motion #topo:has(#hero-title.is-in) .hero-photo img { animation-play-state: running; }
+@keyframes photoIn { from { transform: scale(1.35); opacity: .35; } to { transform: none; opacity: 1; } }
+.hero-photo, #hero-title { will-change: transform; }
+
+/* Linhas finas que se desenham */
+html.motion .idx { position: relative; border-top-color: transparent; }
+html.motion .idx::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; background: var(--rule);
+  transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.4s var(--ease-io);
+}
+html.motion .idx.is-in::before { transform: none; }
+
+/* Números que rolam (odômetro) */
+.dg { display: inline-flex; flex-direction: column; height: 1.15em; overflow: hidden; vertical-align: bottom; }
+.dg-col { display: flex; flex-direction: column; transition: transform 1.5s var(--ease-out); }
+.dg-col > span { display: block; height: 1.15em; line-height: 1.15em; }
+.dg + .dg .dg-col { transition-delay: .14s; }
+.is-in .dg-col { transform: translateY(calc(var(--d) * -1.15em)); }
+
+/* Letreiro do rodapé letra por letra */
+html.motion .ft-mark .fc { display: inline-block; transform: translateY(108%); transition: transform 1.1s var(--ease-out); transition-delay: calc(var(--c) * 38ms); }
+html.motion .ft-mark { overflow: hidden; }
+html.motion .ft-mark-wrap.is-in .fc { transform: none; }
+
+/* Botões magnéticos */
+.btn.mag { transition: background-color var(--t1) var(--ease-out), color var(--t1) var(--ease-out), transform .6s var(--ease-out); }
+
+/* Progresso de leitura no menu */
+.nav::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--accent); transform: scaleX(var(--p, 0)); transform-origin: 0 50%; pointer-events: none; }
+html.reduce .nav::after { display: none; }
+
+/* Faixa de modalidades guiada pelo JS (acelera com a rolagem) */
+html.js-marquee .marquee-track { animation: none; will-change: transform; }

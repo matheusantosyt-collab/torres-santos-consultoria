@@ -29,6 +29,7 @@
   try { calm = localStorage.getItem('tsc-calm') === '1'; } catch (e) {}
   if (new URLSearchParams(location.search).get('movimento') === 'nao') calm = true;
   d.classList.add(calm ? 'reduce' : 'motion');
+  if (!calm) { var seen = null; try { seen = sessionStorage.getItem('tsc-intro'); } catch (e) {} if (seen !== '1') d.classList.add('curtain'); }
   d.setAttribute('data-theme', 'papel');
 })();
 </script>

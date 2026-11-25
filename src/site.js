@@ -1,4 +1,6 @@
-/* Torres Santos Consultoria — site. Vanilla JS, sem dependências. */
+/* Torres Santos Consultoria — site. JavaScript puro; a camada de movimento fica em motion.js. */
+import './motion.js'
+
 (() => {
   'use strict';
 
@@ -113,7 +115,9 @@
     if (intro) {
       const go = () => requestAnimationFrame(() => intro.classList.add('is-in'));
       const t = new Promise((r) => setTimeout(r, 450));
-      Promise.race([document.fonts ? document.fonts.ready : t, t]).then(go);
+      Promise.race([document.fonts ? document.fonts.ready : t, t])
+        .then(() => window.__curtain || null)
+        .then(() => setTimeout(go, 120));
     }
   }
 
@@ -213,7 +217,8 @@
   steps.forEach((b, i) => b.addEventListener('click', () => {
     const total = met.offsetHeight - innerHeight;
     const top = met.getBoundingClientRect().top + scrollY + (i * SEG + SEG * 0.55) * total;
-    scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+    if (window.__lenis) window.__lenis.scrollTo(top, { duration: 1.4 });
+    else scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
   }));
 
   function updateMetodo() {
