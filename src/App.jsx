@@ -1,25 +1,26 @@
 import { useEffect, useRef, useState } from 'react'
-import { useReducedMotion } from 'motion/react'
 import Lenis from 'lenis'
 import { Cursor, Nav, Preloader, ProgressBar } from './components/chrome'
+import { useCalm } from './components/fx'
 import Hero from './sections/Hero'
-import Intro, { Marquee } from './sections/Intro'
+import Statement from './sections/Statement'
 import Services from './sections/Services'
-import Stats, { PhotoBand } from './sections/Stats'
-import Method from './sections/Method'
+import Stats from './sections/Stats'
+import Process from './sections/Process'
 import About from './sections/About'
+import Faq from './sections/Faq'
 import Contact from './sections/Contact'
 import Footer from './sections/Footer'
 
 export default function App() {
-  const reduce = useReducedMotion()
-  const [ready, setReady] = useState(!!reduce) // hero começa a animar
-  const [loaded, setLoaded] = useState(!!reduce) // cortina já saiu
+  const calm = useCalm()
+  const [ready, setReady] = useState(calm) // o hero começa a animar
+  const [loaded, setLoaded] = useState(calm) // a cortina já saiu
   const lenisRef = useRef(null)
 
-  // Rolagem suave
+  // Rolagem suave (desligada no modo calmo)
   useEffect(() => {
-    if (reduce) return
+    if (calm) return
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -32,13 +33,15 @@ export default function App() {
       raf = requestAnimationFrame(loop)
     }
     raf = requestAnimationFrame(loop)
-    lenis.stop() // trava até o pré-carregador sair
+    if (!loaded) lenis.stop()
     return () => {
       cancelAnimationFrame(raf)
       lenis.destroy()
+      lenisRef.current = null
       window.__lenis = undefined
     }
-  }, [reduce])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [calm])
 
   // Trava a rolagem enquanto carrega
   useEffect(() => {
@@ -46,7 +49,14 @@ export default function App() {
     if (loaded) lenisRef.current?.start()
   }, [loaded])
 
-  // Links âncora com rolagem suave
+  useEffect(() => {
+    if (calm) {
+      setReady(true)
+      setLoaded(true)
+    }
+  }, [calm])
+
+  // Links âncora
   useEffect(() => {
     const onClick = (e) => {
       const a = e.target.closest?.('a[href^="#"]')
@@ -56,11 +66,11 @@ export default function App() {
       if (!el) return
       e.preventDefault()
       if (lenisRef.current) lenisRef.current.scrollTo(id === '#top' ? 0 : el, { duration: 1.6 })
-      else el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' })
+      else el.scrollIntoView({ behavior: calm ? 'auto' : 'smooth' })
     }
     document.addEventListener('click', onClick)
     return () => document.removeEventListener('click', onClick)
-  }, [reduce])
+  }, [calm])
 
   return (
     <>
@@ -70,13 +80,12 @@ export default function App() {
       <Nav show={ready} />
       <main>
         <Hero ready={ready} />
-        <Intro />
-        <Marquee />
+        <Statement />
         <Services />
         <Stats />
-        <PhotoBand />
-        <Method />
+        <Process />
         <About />
+        <Faq />
         <Contact />
       </main>
       <Footer />

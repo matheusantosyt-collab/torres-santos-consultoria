@@ -1,26 +1,58 @@
-import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react'
 import {
   motion,
   useInView,
   animate,
-  useReducedMotion,
   useMotionValue,
   useSpring,
   useScroll,
   useTransform,
+  useVelocity,
+  useAnimationFrame,
 } from 'motion/react'
 
 export const EASE = [0.16, 1, 0.3, 1]
 export const EASE_IO = [0.76, 0, 0.24, 1]
 
+/* ───────── Modo "calmo": as animações ficam LIGADAS por padrão; o visitante pode reduzir ───────── */
+const KEY = 'tsc-calm'
+const subs = new Set()
+let calm = false
+try {
+  calm = localStorage.getItem(KEY) === '1'
+} catch {
+  /* sem localStorage */
+}
+export const getCalm = () => calm
+export function setCalm(v) {
+  calm = v
+  try {
+    localStorage.setItem(KEY, v ? '1' : '0')
+  } catch {
+    /* ignora */
+  }
+  document.documentElement.classList.toggle('calm', v)
+  subs.forEach((f) => f())
+}
+export function useCalm() {
+  return useSyncExternalStore(
+    (f) => {
+      subs.add(f)
+      return () => subs.delete(f)
+    },
+    () => calm,
+    () => false,
+  )
+}
+
 /** Entrada: sobe e aparece uma vez, quando entra na tela. */
-export function Reveal({ as = 'div', delay = 0, y = 28, amount = 0.1, className, children, ...rest }) {
-  const reduce = useReducedMotion()
+export function Reveal({ as = 'div', delay = 0, y = 32, amount = 0.15, className, children, ...rest }) {
+  const off = useCalm()
   const Tag = motion[as]
   return (
     <Tag
       className={className}
-      initial={reduce ? false : { opacity: 0, y }}
+      initial={off ? false : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount }}
       transition={{ duration: 1.1, ease: EASE, delay }}
@@ -32,11 +64,11 @@ export function Reveal({ as = 'div', delay = 0, y = 28, amount = 0.1, className,
 }
 
 /** Texto letra por letra: cada letra sobe de dentro de uma máscara. */
-export function Letters({ text, play = true, inView = false, delay = 0, stagger = 0.035, className = '' }) {
-  const reduce = useReducedMotion()
+export function Letters({ text, play = true, inView = false, delay = 0, stagger = 0.03, className = '' }) {
+  const off = useCalm()
   const ref = useRef(null)
   const seen = useInView(ref, { once: true, amount: 0.1 })
-  const go = reduce ? true : inView ? seen : play
+  const go = off ? true : inView ? seen : play
   const words = text.split(' ')
   let k = 0
   return (
@@ -50,9 +82,9 @@ export function Letters({ text, play = true, inView = false, delay = 0, stagger 
                 <span className="mask" key={ci}>
                   <motion.span
                     className="ch"
-                    initial={reduce ? false : { y: '118%', rotate: 5 }}
+                    initial={off ? false : { y: '118%', rotate: 6 }}
                     animate={go ? { y: '0%', rotate: 0 } : {}}
-                    transition={{ duration: 1.15, ease: EASE, delay: delay + i * stagger }}
+                    transition={{ duration: 1.1, ease: EASE, delay: delay + i * stagger }}
                   >
                     {c}
                   </motion.span>
@@ -69,16 +101,17 @@ export function Letters({ text, play = true, inView = false, delay = 0, stagger 
 
 /** Número que conta de 0 até `to` quando entra na tela. */
 export function CountUp({ to, duration = 2.4, suffix = '', className = '' }) {
-  const reduce = useReducedMotion()
+  const off = useCalm()
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, amount: 0.6 })
   const fmt = (v) => Math.round(v).toLocaleString('pt-BR')
-  const [txt, setTxt] = useState(reduce ? fmt(to) : fmt(0))
+  const [txt, setTxt] = useState(off ? fmt(to) : fmt(0))
   useEffect(() => {
-    if (!inView || reduce) return
+    if (!inView) return
+    if (off) return setTxt(fmt(to))
     const c = animate(0, to, { duration, ease: [0.22, 1, 0.36, 1], onUpdate: (v) => setTxt(fmt(v)) })
     return () => c.stop()
-  }, [inView, reduce, to, duration])
+  }, [inView, off, to, duration])
   return (
     <span ref={ref} className={`num ${className}`}>
       {txt}
@@ -89,23 +122,19 @@ export function CountUp({ to, duration = 2.4, suffix = '', className = '' }) {
 
 /** Número que anima de um valor ao outro quando `value` muda. */
 export function TweenNumber({ value, suffix = '', className = '' }) {
-  const reduce = useReducedMotion()
+  const off = useCalm()
   const [txt, setTxt] = useState(value)
   const prev = useRef(value)
   useEffect(() => {
-    if (reduce) {
+    if (off) {
       setTxt(value)
       prev.current = value
       return
     }
-    const c = animate(prev.current, value, {
-      duration: 0.7,
-      ease: EASE,
-      onUpdate: (v) => setTxt(Math.round(v)),
-    })
+    const c = animate(prev.current, value, { duration: 0.7, ease: EASE, onUpdate: (v) => setTxt(Math.round(v)) })
     prev.current = value
     return () => c.stop()
-  }, [value])
+  }, [value, off])
   return (
     <span className={`num ${className}`}>
       {txt}
@@ -115,7 +144,7 @@ export function TweenNumber({ value, suffix = '', className = '' }) {
 }
 
 /** Ajusta o tamanho da fonte para o texto ocupar exatamente a largura da caixa. */
-export function FitWord({ text, play = true, delay = 0, stagger = 0.045, className = '' }) {
+export function FitWord({ text, play = true, inView = false, delay = 0, stagger = 0.045, className = '' }) {
   const boxRef = useRef(null)
   const textRef = useRef(null)
   useLayoutEffect(() => {
@@ -128,8 +157,6 @@ export function FitWord({ text, play = true, delay = 0, stagger = 0.045, classNa
       if (w) t.style.fontSize = `${(100 * b.clientWidth) / w}px`
     }
     fit()
-    // A fonte Erode vem de fora: refaz o encaixe quando ela de fato chegar
-    // (fonts.ready pode resolver antes de o download começar).
     document.fonts?.load('500 100px Erode').then(fit)
     document.fonts?.ready.then(fit)
     document.fonts?.addEventListener?.('loadingdone', fit)
@@ -145,7 +172,7 @@ export function FitWord({ text, play = true, delay = 0, stagger = 0.045, classNa
   return (
     <span ref={boxRef} className={`fit ${className}`}>
       <span ref={textRef} className="fit-inner">
-        <Letters text={text} play={play} delay={delay} stagger={stagger} />
+        <Letters text={text} play={play} inView={inView} delay={delay} stagger={stagger} />
       </span>
     </span>
   )
@@ -153,20 +180,20 @@ export function FitWord({ text, play = true, delay = 0, stagger = 0.045, classNa
 
 /** Palavras que acendem conforme a rolagem. */
 export function ScrollWords({ text, className = '' }) {
-  const reduce = useReducedMotion()
+  const off = useCalm()
   const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.85', 'end 0.45'] })
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.9', 'end 0.5'] })
   const words = text.split(' ')
   return (
     <p ref={ref} className={className}>
       {words.map((w, i) => (
-        <ScrollWord key={i} word={w} p={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} off={reduce} />
+        <ScrollWord key={i} word={w} p={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} off={off} />
       ))}
     </p>
   )
 }
 function ScrollWord({ word, p, range, off }) {
-  const o = useTransform(p, range, [0.16, 1])
+  const o = useTransform(p, range, [0.14, 1])
   return (
     <>
       <motion.span style={off ? undefined : { opacity: o }}>{word}</motion.span>{' '}
@@ -174,16 +201,16 @@ function ScrollWord({ word, p, range, off }) {
   )
 }
 
-/** Botão/área que é puxada de leve em direção ao cursor. */
-export function Magnetic({ children, strength = 0.28, className = '' }) {
-  const reduce = useReducedMotion()
+/** Botão puxado de leve em direção ao cursor. */
+export function Magnetic({ children, strength = 0.3, className = '' }) {
+  const off = useCalm()
   const ref = useRef(null)
   const x = useMotionValue(0)
   const y = useMotionValue(0)
   const sx = useSpring(x, { stiffness: 220, damping: 18, mass: 0.5 })
   const sy = useSpring(y, { stiffness: 220, damping: 18, mass: 0.5 })
   const move = (e) => {
-    if (reduce) return
+    if (off) return
     const r = ref.current.getBoundingClientRect()
     x.set((e.clientX - (r.left + r.width / 2)) * strength)
     y.set((e.clientY - (r.top + r.height / 2)) * strength)
@@ -199,20 +226,97 @@ export function Magnetic({ children, strength = 0.28, className = '' }) {
   )
 }
 
+/** Cartão com brilho que segue o mouse e leve inclinação 3D. */
+export function Spot({ as = 'div', tilt = true, className = '', children, ...rest }) {
+  const off = useCalm()
+  const ref = useRef(null)
+  const rx = useMotionValue(0)
+  const ry = useMotionValue(0)
+  const srx = useSpring(rx, { stiffness: 180, damping: 20 })
+  const sry = useSpring(ry, { stiffness: 180, damping: 20 })
+  const move = (e) => {
+    const el = ref.current
+    if (!el) return
+    const r = el.getBoundingClientRect()
+    const x = e.clientX - r.left
+    const y = e.clientY - r.top
+    el.style.setProperty('--mx', `${x}px`)
+    el.style.setProperty('--my', `${y}px`)
+    if (tilt && !off) {
+      ry.set((x / r.width - 0.5) * 7)
+      rx.set(-(y / r.height - 0.5) * 7)
+    }
+  }
+  const leave = () => {
+    rx.set(0)
+    ry.set(0)
+  }
+  const Tag = motion[as]
+  return (
+    <Tag
+      ref={ref}
+      className={`spot ${className}`}
+      style={off ? undefined : { rotateX: srx, rotateY: sry, transformPerspective: 1000 }}
+      onMouseMove={move}
+      onMouseLeave={leave}
+      {...rest}
+    >
+      {children}
+    </Tag>
+  )
+}
+
+/** Faixa de texto que corre sozinha e acelera/entorta com a velocidade da rolagem. */
+export function VelocityMarquee({ items, reverse = false, className = '' }) {
+  const off = useCalm()
+  const { scrollY } = useScroll()
+  const vel = useVelocity(scrollY)
+  const sm = useSpring(vel, { stiffness: 400, damping: 50 })
+  const skew = useTransform(sm, [-2500, 2500], [-7, 7])
+  const x = useMotionValue(0)
+  const ref = useRef(null)
+  const base = reverse ? 0.045 : -0.045
+  useAnimationFrame((_, delta) => {
+    if (off) return
+    const half = ref.current ? ref.current.scrollWidth / 2 : 0
+    if (!half) return
+    const boost = 1 + Math.abs(sm.get()) / 350
+    let nx = x.get() + base * delta * boost
+    if (nx <= -half) nx += half
+    if (nx > 0) nx -= half
+    x.set(nx)
+  })
+  const row = [...items, ...items]
+  return (
+    <div className={`vmarquee ${className}`} aria-hidden="true">
+      <motion.div ref={ref} className="vmarquee-track" style={{ x, skewX: off ? 0 : skew }}>
+        {[0, 1].map((n) =>
+          row.map((m, i) => (
+            <span key={`${n}-${i}`}>
+              {m}
+              <b>§</b>
+            </span>
+          )),
+        )}
+      </motion.div>
+    </div>
+  )
+}
+
 /** Foto que se abre (clip-path) e desliza conforme a rolagem. */
-export function ParallaxPhoto({ src, alt, className = '', pos = '50% 50%', shift = 40, width, height }) {
-  const reduce = useReducedMotion()
+export function ParallaxPhoto({ src, alt, className = '', pos = '50% 50%', shift = 60, width, height, onError }) {
+  const off = useCalm()
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], [`-${shift / 2}px`, `${shift / 2}px`])
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.22, 1.1, 1.18])
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.25, 1.12, 1.2])
   return (
     <motion.figure
       ref={ref}
       className={`photo ${className}`}
-      initial={reduce ? false : { clipPath: 'inset(14% 10% 14% 10%)' }}
-      whileInView={{ clipPath: 'inset(0% 0% 0% 0%)' }}
-      viewport={{ once: true, amount: 0.25 }}
+      initial={off ? false : { clipPath: 'inset(12% 8% 12% 8% round 24px)' }}
+      whileInView={{ clipPath: 'inset(0% 0% 0% 0% round 24px)' }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 1.4, ease: EASE }}
     >
       <motion.img
@@ -221,8 +325,20 @@ export function ParallaxPhoto({ src, alt, className = '', pos = '50% 50%', shift
         width={width}
         height={height}
         loading="lazy"
-        style={reduce ? { objectPosition: pos } : { y, scale, objectPosition: pos }}
+        onError={onError}
+        style={off ? { objectPosition: pos } : { y, scale, objectPosition: pos }}
       />
     </motion.figure>
+  )
+}
+
+/** Fundo animado (manchas de cor que flutuam). */
+export function Aurora({ className = '' }) {
+  return (
+    <div className={`aurora ${className}`} aria-hidden="true">
+      <i />
+      <i />
+      <i />
+    </div>
   )
 }

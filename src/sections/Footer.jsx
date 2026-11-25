@@ -1,24 +1,24 @@
 import { useRef } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { NAV, SITE } from '../config'
-import { FitWord, Reveal } from '../components/fx'
+import { FitWord, Reveal, setCalm, useCalm } from '../components/fx'
 import credits from '../credits.json'
 
 export default function Footer() {
-  const reduce = useReducedMotion()
+  const off = useCalm()
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end end'] })
   const scale = useTransform(scrollYProgress, [0, 1], [0.9, 1])
-  const mail = `mailto:${SITE.email}`
-  const wa = SITE.whatsapp ? `https://wa.me/${SITE.whatsapp}` : null
 
   return (
     <footer ref={ref} className="footer">
       <Reveal className="footer-cols" amount={0.1}>
         <div>
           <p className="f-first">Contato</p>
-          <a href={mail}>{SITE.email}</a>
-          {wa && <a href={wa}>WhatsApp</a>}
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+          <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener noreferrer">
+            WhatsApp {SITE.whatsappLabel}
+          </a>
         </div>
         <div>
           <p className="f-first">Navegação</p>
@@ -27,6 +27,7 @@ export default function Footer() {
               {l.label}
             </a>
           ))}
+          <a href="#contato">Contato</a>
         </div>
         <div>
           <p className="f-first">Atendimento</p>
@@ -40,22 +41,26 @@ export default function Footer() {
         </div>
       </Reveal>
 
-      <motion.div className="footer-mark" style={reduce ? undefined : { scale }}>
+      <motion.div className="footer-mark" style={off ? undefined : { scale }}>
         <FitWord text="Torres Santos" inView stagger={0.04} />
       </motion.div>
 
       <div className="footer-legal">
-        <p>
-          © {SITE.year} {SITE.name}. Todos os direitos reservados.
-        </p>
+        <div className="legal-row">
+          <p>
+            © {SITE.year} {SITE.name}. Todos os direitos reservados.
+          </p>
+          <button type="button" className="calm-toggle" aria-pressed={off} onClick={() => setCalm(!off)}>
+            Animações: {off ? 'reduzidas' : 'ligadas'} · {off ? 'ligar' : 'reduzir'}
+          </button>
+        </div>
         <ul className="credits" aria-label="Créditos das fotografias">
           {credits.map((c) => (
             <li key={c.page}>
               <a href={c.page}>“{c.title}”</a>
               <span>
                 {' '}
-                por {c.creator},{' '}
-                <a href={c.licenseUrl}>{c.license}</a>, via Wikimedia Commons
+                por {c.creator}, <a href={c.licenseUrl}>{c.license}</a>, via Wikimedia Commons
               </span>
             </li>
           ))}

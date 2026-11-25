@@ -1,95 +1,96 @@
-import { useEffect, useRef, useState } from 'react'
-import { animate, motion, useInView, useReducedMotion } from 'motion/react'
-import { EASE, Letters } from '../components/fx'
+import { motion } from 'motion/react'
+import { CountUp, EASE, Letters, Reveal, Spot, useCalm } from '../components/fx'
 
-/* O glifo gigante é decorativo: o texto vem do CSS (data-g), não do conteúdo da página. */
-function CountGlyph({ to, className }) {
-  const reduce = useReducedMotion()
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, amount: 0.3 })
-  const fmt = (v) => Math.round(v).toLocaleString('pt-BR')
-  const [txt, setTxt] = useState(reduce ? fmt(to) : fmt(0))
-  useEffect(() => {
-    if (!inView || reduce) return
-    const c = animate(0, to, { duration: 2.8, ease: [0.22, 1, 0.36, 1], onUpdate: (v) => setTxt(fmt(v)) })
-    return () => c.stop()
-  }, [inView, reduce, to])
-  return <span ref={ref} className={className} data-g={txt} aria-hidden="true" />
+const I = {
+  doc: <path d="M7 3h7l5 5v13H7zM14 3v5h5M10 13h6M10 17h6" />,
+  flag: <path d="M6 21V4M6 5h11l-2 4 2 4H6" />,
+  shield: <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM8.5 12.5l2.5 2.5 4.5-5" />,
+  chart: <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />,
+  scale: <path d="M12 4v16M6 20h12M5 8h14M5 8l-3 7a3.5 3.5 0 006 0zM19 8l-3 7a3.5 3.5 0 006 0z" />,
+  clock: <path d="M12 7v5l3 2M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />,
 }
-
-function Glyph({ g, big }) {
-  const cls = `glyph ${big ? 'glyph-big' : ''}`
-  if (typeof g === 'string') return <span className={cls} data-g={g} aria-hidden="true" />
-  if (typeof g === 'number') return <CountGlyph to={g} className={cls} />
-  return (
-    <span className={cls} aria-hidden="true">
-      {g}
-    </span>
-  )
-}
-
-const Check = () => (
-  <svg viewBox="0 0 100 100" className="glyph-svg" aria-hidden="true">
-    <path d="M12 54 L38 80 L88 20" fill="none" stroke="currentColor" strokeWidth="14" strokeLinecap="square" />
-  </svg>
-)
-const Arrow = () => (
-  <svg viewBox="0 0 100 100" className="glyph-svg" aria-hidden="true">
-    <path d="M20 80 L80 20 M30 20 H80 V70" fill="none" stroke="currentColor" strokeWidth="12" strokeLinecap="square" />
+const Icon = ({ name }) => (
+  <svg viewBox="0 0 24 24" className="ico" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+    {I[name]}
   </svg>
 )
 
-const TILES = [
+const BIG = [
   {
-    id: 'a',
-    tone: 'accent',
-    glyph: 14133,
+    key: 'lic',
+    cls: 'b-lic',
+    icon: 'flag',
     title: 'Licitações públicas',
-    text: 'Da leitura do edital à assinatura do contrato, para quem vende ao poder público.',
-    big: true,
+    text: 'Para empresas que vendem ou querem vender ao poder público.',
+    items: ['Leitura e análise de editais', 'Habilitação e documentos', 'Proposta e estratégia de preço', 'Impugnações, recursos e prazos', 'Acompanhamento do contrato'],
+    badge: true,
   },
   {
-    id: 'b',
-    tone: 'light',
-    glyph: 'R$',
+    key: 'emp',
+    cls: 'b-emp',
+    icon: 'chart',
     title: 'Consultoria para empresas',
-    text: 'Processos, documentos e decisões organizados para a empresa crescer com clareza.',
-    big: true,
+    text: 'Para organizar a casa e decidir com clareza.',
+    items: ['Diagnóstico da empresa', 'Processos e rotinas', 'Contratos e documentos', 'Planejamento do crescimento'],
   },
-  { id: 'c', tone: 's1', glyph: '§', title: 'Análise de editais', text: 'Exigências, prazos e riscos lidos antes da decisão.' },
-  { id: 'd', tone: 's2', glyph: '3d', title: 'Impugnações e recursos', text: 'Prazos curtos tratados com urgência.' },
-  { id: 'e', tone: 's2', glyph: <Check />, title: 'Habilitação', text: 'Documentos em ordem antes da sessão.' },
-  { id: 'f', tone: 's1', glyph: '%', title: 'Propostas', text: 'Preço, prazo e exigências no mesmo lugar.' },
-  { id: 'g', tone: 's2', glyph: '¶', title: 'Contratos', text: 'Acompanhamento da execução e dos prazos.' },
-  { id: 'h', tone: 's1', glyph: <Arrow />, title: 'Diagnóstico empresarial', text: 'Retrato da empresa e do próximo passo.' },
+]
+
+const SMALL = [
+  { icon: 'doc', title: 'Análise de editais', text: 'Exigências, prazos e riscos lidos antes da decisão.' },
+  { icon: 'scale', title: 'Impugnações e recursos', text: 'Prazos curtos tratados com urgência.' },
+  { icon: 'shield', title: 'Habilitação', text: 'Documentos em ordem antes da sessão.' },
+  { icon: 'clock', title: 'Contratos e prazos', text: 'Execução acompanhada de perto.' },
 ]
 
 export default function Services() {
-  const reduce = useReducedMotion()
+  const off = useCalm()
+  const pop = (i) => ({
+    initial: off ? false : { opacity: 0, y: 50, scale: 0.96 },
+    whileInView: { opacity: 1, y: 0, scale: 1 },
+    viewport: { once: true, amount: 0.2 },
+    transition: { duration: 1.1, ease: EASE, delay: (i % 4) * 0.08 },
+  })
   return (
     <section id="servicos" className="services" aria-labelledby="servicos-h">
-      <div className="board">
-        <div className="tile t-head tone-s1">
-          <h2 id="servicos-h">
-            <Letters text="O que fazemos" inView stagger={0.03} />
-          </h2>
-        </div>
+      <header className="sec-head">
+        <h2 id="servicos-h">
+          <Letters text="Como podemos ajudar" inView stagger={0.03} />
+        </h2>
+        <Reveal as="p" delay={0.2}>
+          Duas frentes de trabalho, um mesmo método: ler, organizar e decidir com antecedência.
+        </Reveal>
+      </header>
 
-        {TILES.map((t, i) => (
-          <motion.article
-            key={t.id}
-            className={`tile t-${t.id} tone-${t.tone}`}
-            initial={reduce ? false : { opacity: 0, y: 48, clipPath: 'inset(0 0 22% 0)' }}
-            whileInView={{ opacity: 1, y: 0, clipPath: 'inset(0 0 0% 0)' }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 1.1, ease: EASE, delay: (i % 4) * 0.08 }}
-          >
-            <Glyph g={t.glyph} big={t.big} />
-            <div className="cap">
-              <h3>{t.title}</h3>
-              <p>{t.text}</p>
+      <div className="bento">
+        {BIG.map((b, i) => (
+          <Spot key={b.key} as="article" className={`card ${b.cls}`} {...pop(i)}>
+            <div className="card-top">
+              <span className="ico-box">
+                <Icon name={b.icon} />
+              </span>
+              {b.badge && (
+                <span className="badge">
+                  Lei <CountUp to={14133} duration={2.2} />
+                </span>
+              )}
             </div>
-          </motion.article>
+            <h3>{b.title}</h3>
+            <p>{b.text}</p>
+            <ul>
+              {b.items.map((t) => (
+                <li key={t}>{t}</li>
+              ))}
+            </ul>
+          </Spot>
+        ))}
+        {SMALL.map((s, i) => (
+          <Spot key={s.title} as="article" className="card card-s" {...pop(i + 2)}>
+            <span className="ico-box">
+              <Icon name={s.icon} />
+            </span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+          </Spot>
         ))}
       </div>
     </section>
