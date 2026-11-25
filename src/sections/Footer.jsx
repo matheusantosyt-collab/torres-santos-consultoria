@@ -36,7 +36,7 @@ export default function Footer() {
         </div>
         <div>
           <p className="f-first">{SITE.owner}</p>
-          <p>Bacharel em Direito</p>
+          <p>Fundador</p>
           <p>Consultoria técnica. Não substitui a atuação de advogado inscrito na OAB.</p>
         </div>
       </Reveal>

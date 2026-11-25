@@ -23,7 +23,7 @@ export default function About() {
             onError={() => setNoPhoto(true)}
           />
         )}
-        <span className="float f4">Bacharel em Direito</span>
+        <span className="float f4">Fundador</span>
         <span className="float f5">Consultoria técnica</span>
       </div>
 
@@ -33,7 +33,7 @@ export default function About() {
           <Letters text="Matheus Santos Torres" inView stagger={0.03} />
         </h2>
         <Reveal as="p" className="about-lead">
-          Bacharel em Direito, fundou a Torres Santos Consultoria para fazer do edital um terreno conhecido.
+          Matheus fundou a Torres Santos Consultoria para fazer do edital um terreno conhecido.
         </Reveal>
         <Reveal as="p" delay={0.05}>
           Seu trabalho está entre o direito administrativo e a gestão: ler o edital com método, organizar a documentação, montar
