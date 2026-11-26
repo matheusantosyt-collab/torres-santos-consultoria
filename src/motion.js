@@ -93,7 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
       s.textContent = ch === ' ' ? ' ' : ch
       mark.appendChild(s)
     })
-    window.dispatchEvent(new Event('resize'))
+    // reajusta o tamanho quando a fonte já estiver aplicada às letras separadas
+    const refit = () => window.dispatchEvent(new Event('resize'))
+    refit()
+    if (document.fonts) document.fonts.ready.then(() => requestAnimationFrame(refit))
+    window.addEventListener('load', () => requestAnimationFrame(refit))
   }
 
   /* ---------- Números que rolam (odômetro) ---------- */
